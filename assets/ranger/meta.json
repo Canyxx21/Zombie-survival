@@ -1,0 +1,514 @@
+{
+ "id": "ranger",
+ "name": "Ranger",
+ "frame_w": 32,
+ "frame_h": 32,
+ "origin": "feet at x=16, y=28",
+ "layout": "rows = animation x direction (down, left, right, up), columns = frames",
+ "animations": [
+  {
+   "name": "idle_down",
+   "row": 0,
+   "frames": 4,
+   "fps": 5,
+   "loop": true
+  },
+  {
+   "name": "idle_left",
+   "row": 1,
+   "frames": 4,
+   "fps": 5,
+   "loop": true
+  },
+  {
+   "name": "idle_right",
+   "row": 2,
+   "frames": 4,
+   "fps": 5,
+   "loop": true
+  },
+  {
+   "name": "idle_up",
+   "row": 3,
+   "frames": 4,
+   "fps": 5,
+   "loop": true
+  },
+  {
+   "name": "walk_down",
+   "row": 4,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "walk_left",
+   "row": 5,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "walk_right",
+   "row": 6,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "walk_up",
+   "row": 7,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "run_down",
+   "row": 8,
+   "frames": 6,
+   "fps": 12,
+   "loop": true
+  },
+  {
+   "name": "run_left",
+   "row": 9,
+   "frames": 6,
+   "fps": 12,
+   "loop": true
+  },
+  {
+   "name": "run_right",
+   "row": 10,
+   "frames": 6,
+   "fps": 12,
+   "loop": true
+  },
+  {
+   "name": "run_up",
+   "row": 11,
+   "frames": 6,
+   "fps": 12,
+   "loop": true
+  },
+  {
+   "name": "jump_down",
+   "row": 12,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "jump_left",
+   "row": 13,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "jump_right",
+   "row": 14,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "jump_up",
+   "row": 15,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "sit_down",
+   "row": 16,
+   "frames": 3,
+   "fps": 6,
+   "loop": false
+  },
+  {
+   "name": "sit_left",
+   "row": 17,
+   "frames": 3,
+   "fps": 6,
+   "loop": false
+  },
+  {
+   "name": "sit_right",
+   "row": 18,
+   "frames": 3,
+   "fps": 6,
+   "loop": false
+  },
+  {
+   "name": "sit_up",
+   "row": 19,
+   "frames": 3,
+   "fps": 6,
+   "loop": false
+  },
+  {
+   "name": "climb_down",
+   "row": 20,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "climb_left",
+   "row": 21,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "climb_right",
+   "row": 22,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "climb_up",
+   "row": 23,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "pickup_down",
+   "row": 24,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "pickup_left",
+   "row": 25,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "pickup_right",
+   "row": 26,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "pickup_up",
+   "row": 27,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "interact_down",
+   "row": 28,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "interact_left",
+   "row": 29,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "interact_right",
+   "row": 30,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "interact_up",
+   "row": 31,
+   "frames": 4,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "push_down",
+   "row": 32,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "push_left",
+   "row": 33,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "push_right",
+   "row": 34,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "push_up",
+   "row": 35,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "pull_down",
+   "row": 36,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "pull_left",
+   "row": 37,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "pull_right",
+   "row": 38,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "pull_up",
+   "row": 39,
+   "frames": 4,
+   "fps": 6,
+   "loop": true
+  },
+  {
+   "name": "carry_idle_down",
+   "row": 40,
+   "frames": 2,
+   "fps": 4,
+   "loop": true
+  },
+  {
+   "name": "carry_idle_left",
+   "row": 41,
+   "frames": 2,
+   "fps": 4,
+   "loop": true
+  },
+  {
+   "name": "carry_idle_right",
+   "row": 42,
+   "frames": 2,
+   "fps": 4,
+   "loop": true
+  },
+  {
+   "name": "carry_idle_up",
+   "row": 43,
+   "frames": 2,
+   "fps": 4,
+   "loop": true
+  },
+  {
+   "name": "carry_walk_down",
+   "row": 44,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "carry_walk_left",
+   "row": 45,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "carry_walk_right",
+   "row": 46,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "carry_walk_up",
+   "row": 47,
+   "frames": 6,
+   "fps": 8,
+   "loop": true
+  },
+  {
+   "name": "sword_down",
+   "row": 48,
+   "frames": 5,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "sword_left",
+   "row": 49,
+   "frames": 5,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "sword_right",
+   "row": 50,
+   "frames": 5,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "sword_up",
+   "row": 51,
+   "frames": 5,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "punch_down",
+   "row": 52,
+   "frames": 4,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "punch_left",
+   "row": 53,
+   "frames": 4,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "punch_right",
+   "row": 54,
+   "frames": 4,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "punch_up",
+   "row": 55,
+   "frames": 4,
+   "fps": 12,
+   "loop": false
+  },
+  {
+   "name": "bow_down",
+   "row": 56,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "bow_left",
+   "row": 57,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "bow_right",
+   "row": 58,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "bow_up",
+   "row": 59,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "cast_down",
+   "row": 60,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "cast_left",
+   "row": 61,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "cast_right",
+   "row": 62,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "cast_up",
+   "row": 63,
+   "frames": 5,
+   "fps": 10,
+   "loop": false
+  },
+  {
+   "name": "hurt_down",
+   "row": 64,
+   "frames": 2,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "hurt_left",
+   "row": 65,
+   "frames": 2,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "hurt_right",
+   "row": 66,
+   "frames": 2,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "hurt_up",
+   "row": 67,
+   "frames": 2,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "death_down",
+   "row": 68,
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "death_left",
+   "row": 69,
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "death_right",
+   "row": 70,
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  {
+   "name": "death_up",
+   "row": 71,
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  }
+ ]
+}

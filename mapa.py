@@ -1,7 +1,10 @@
 import random
 from collections import deque
 import pygame
-from settings import COLUMNAS, FILAS, TAM, PISO, PARED,LODO
+from settings import (
+    COLUMNAS, FILAS, TAM, PISO, PISO_GRID,
+    PARED, PARED_BORDE, PARED_SOMBRA, LODO, LODO_BRILLO
+)
 
 
 class Mapa:
@@ -16,16 +19,30 @@ class Mapa:
         self.lodo = set()
         self.flujo_meta = None
 
-    def generar_obstaculos(self, cantidad=14):
-        for _ in range(cantidad):
-            x = random.randint(3, COLUMNAS - 5)
-            y = random.randint(3, FILAS - 5)
-            horizontal = random.random() < 0.5
-            for k in range(random.randint(2, 5)):
-                cx, cy = (x + k, y) if horizontal else (x, y + k)
-                # dejamos libre el centro, donde aparece el jugador
-                if self.dentro(cx, cy) and not (abs(cx - 15) < 3 and abs(cy - 10) < 3):
-                    self.celdas[cy][cx] = 1
+    def generar_obstaculos(self, cantidad=18, origen=(15, 10)):
+        """Genera muros aleatorios y garantiza que todo el piso siga conectado."""
+        while True:
+            for y in range(1, FILAS - 1):
+                for x in range(1, COLUMNAS - 1):
+                    self.celdas[y][x] = 0
+
+            for _ in range(cantidad):
+                x = random.randint(3, COLUMNAS - 5)
+                y = random.randint(3, FILAS - 5)
+                horizontal = random.random() < 0.5
+                for k in range(random.randint(2, 5)):
+                    cx, cy = (x + k, y) if horizontal else (x, y + k)
+                    if self.dentro(cx, cy) and not (abs(cx - origen[0]) < 3 and abs(cy - origen[1]) < 3):
+                        self.celdas[cy][cx] = 1
+
+            self.calcular_flujo(origen)
+            transitables = sum(
+                1 for y in range(1, FILAS - 1)
+                for x in range(1, COLUMNAS - 1)
+                if self.celdas[y][x] == 0
+            )
+            if len(self.dist) == transitables:
+                break
 
     def dentro(self, x, y):
         return 0 <= x < COLUMNAS and 0 <= y < FILAS
@@ -34,7 +51,7 @@ class Mapa:
         return self.dentro(x, y) and self.celdas[y][x] == 0
 
     def costo(self, x, y):
-        return 1
+        return 4 if (x, y) in self.lodo else 1
 
     def ve(self, a, b, alcance):
         """Línea de visión con Bresenham: las paredes bloquean."""
@@ -62,7 +79,6 @@ class Mapa:
         for cy in range(int((py - r) // TAM), int((py + r) // TAM) + 1):
             for cx in range(int((px - r) // TAM), int((px + r) // TAM) + 1):
                 if not self.dentro(cx, cy) or self.celdas[cy][cx] == 1:
-                    # punto del rectángulo más cercano al centro del círculo
                     mx = max(cx * TAM, min(px, cx * TAM + TAM))
                     my = max(cy * TAM, min(py, cy * TAM + TAM))
                     if (px - mx) ** 2 + (py - my) ** 2 < r * r:
@@ -82,24 +98,28 @@ class Mapa:
                     cola.append(v)
         self.dist = dist
         self.flujo_meta = meta
-    def costo(self,x,y):
-        return 4 if (x,y) in self.lodo else 1
+
     def generar_lodo(self, parches=7):
+        self.lodo.clear()
         for _ in range(parches):
             x = random.randint(2, COLUMNAS - 6)
             y = random.randint(2, FILAS - 5)
             for dy in range(3):
                 for dx in range(4):
                     if self.transitable(x + dx, y + dy):
-                        self.lodo.add((x + dx, y + dy))    
+                        self.lodo.add((x + dx, y + dy))
 
     def dibujar(self, pantalla):
         for y in range(FILAS):
             for x in range(COLUMNAS):
+                rx, ry = x * TAM, y * TAM
                 if self.celdas[y][x]:
-                    color = PARED
+                    pygame.draw.rect(pantalla, PARED_SOMBRA, (rx, ry, TAM, TAM))
+                    pygame.draw.rect(pantalla, PARED, (rx + 1, ry + 1, TAM - 2, TAM - 4))
+                    pygame.draw.rect(pantalla, PARED_BORDE, (rx + 1, ry + 1, TAM - 2, 3))
                 elif (x, y) in self.lodo:
-                    color = LODO
+                    pygame.draw.rect(pantalla, LODO, (rx, ry, TAM, TAM))
+                    pygame.draw.circle(pantalla, LODO_BRILLO, (rx + (x * 7 + y * 5) % 20 + 6, ry + (y * 9) % 18 + 7), 2)
                 else:
-                    color = PISO
-                pygame.draw.rect(pantalla, color, (x * TAM, y * TAM, TAM, TAM))
+                    pygame.draw.rect(pantalla, PISO, (rx, ry, TAM, TAM))
+                    pygame.draw.rect(pantalla, PISO_GRID, (rx, ry, TAM, TAM), 1)
