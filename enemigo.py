@@ -132,9 +132,13 @@ class Enemigo:
             if len(pts) > 1:
                 pygame.draw.lines(pantalla, self.color, False, pts, 1)
 
+        estado_anim = "hurt" if self.flash > 0 else "walk"
         dibujar_entidad_estilizada(
             pantalla, self.tipo, self.x, self.y, self.radio,
-            self.angulo, self._color_actual(), flash=(self.flash > 0)
+            self.angulo, self._color_actual(),
+            flash=(self.flash > 0),
+            estado=estado_anim,
+            congelado=(self.lento_ms > 0)
         )
 
         if self.tipo == "elite" and self.vida < self.vida_max:

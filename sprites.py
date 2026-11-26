@@ -54,7 +54,7 @@ def _cargar_animaciones(nombre, tam):
         return None
 
     animaciones = {}
-    for estado in ("walk", "idle"):
+    for estado in ("walk", "idle", "hurt", "attack"):
         for direccion in ("down", "up", "left", "right"):
             frames = []
             idx = 0
@@ -81,31 +81,38 @@ def _cargar_animaciones(nombre, tam):
     return None
 
 
-def _aplicar_flash(surface):
-    """Crea un destello blanco respetando la silueta transparente del sprite."""
+def _aplicar_tinte(surface, rgb_add):
+    """Aplica un destello o tinte de color respetando la silueta transparente del sprite."""
     copia = surface.copy()
-    copia.fill((255, 255, 255, 180), special_flags=pygame.BLEND_RGBA_ADD)
+    copia.fill((*rgb_add, 0), special_flags=pygame.BLEND_RGBA_ADD)
     return copia
 
 
-def dibujar_entidad_estilizada(pantalla, nombre, x, y, radio, angulo, color, flash=False):
+def dibujar_entidad_estilizada(pantalla, nombre, x, y, radio, angulo, color, flash=False, estado="walk", congelado=False):
     cx, cy = int(x), int(y)
     # Sombra suave en el suelo
     pygame.draw.ellipse(pantalla, (10, 12, 18), (cx - radio, cy + int(radio * 0.45), radio * 2, int(radio * 0.8)))
 
-    # Escala visual proporcional al hitbox (ajusta 3.4 si los quieres más grandes o chicos)
     tam = max(24, int(radio * 3.4))
     animaciones = _cargar_animaciones(nombre, tam)
 
     if animaciones is not None:
         direccion = _angulo_a_direccion(angulo)
-        frames = animaciones.get(f"walk_{direccion}") or animaciones.get(f"idle_{direccion}")
+        frames = (
+            animaciones.get(f"{estado}_{direccion}")
+            or animaciones.get(f"walk_{direccion}")
+            or animaciones.get(f"idle_{direccion}")
+        )
 
         if frames:
-            idx = (pygame.time.get_ticks() // 115) % len(frames)
+            vel_anim = 90 if estado == "hurt" else 115
+            idx = (pygame.time.get_ticks() // vel_anim) % len(frames)
             sprite = frames[idx]
             if flash:
-                sprite = _aplicar_flash(sprite)
+                sprite = _aplicar_tinte(sprite, (190, 190, 190))
+            elif congelado:
+                sprite = _aplicar_tinte(sprite, (0, 85, 140))
+
             # Subimos un poco el centro (- radio * 0.25) para que los pies queden sobre el hitbox
             rect = sprite.get_rect(center=(cx, cy - int(radio * 0.25)))
             pantalla.blit(sprite, rect)
