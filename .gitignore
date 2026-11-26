@@ -1,0 +1,8 @@
+﻿venv/
+__pycache__/
+*.pyc
+.vscode/
+
+# datos que genera el juego al jugar
+ia/cerebro_jefe.npz
+ia/recomendador.json
